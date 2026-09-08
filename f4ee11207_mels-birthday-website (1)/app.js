@@ -53,8 +53,14 @@
       </div>`;
 
     const area = $("#answer-area");
-    if (q.type === "photo") buildPhotoArea(q, area);
-    else buildChoiceArea(q, area);
+
+      if (q.type === "photo") {
+        buildPhotoArea(q, area);
+      } else if (q.type === "text") {
+        buildTextArea(q, area);
+      } else {
+        buildChoiceArea(q, area);
+      }
 
     $("#btn-next").addEventListener("click", () => {
       if (i === cfg.questions.length - 1) startVerification();
@@ -63,6 +69,63 @@
 
     goTo("screen-quiz");
   }
+
+  function buildTextArea(q, area) {
+  const wrap = document.createElement("div");
+  wrap.className = "text-answer-wrap";
+
+  const input = document.createElement("input");
+  input.type = "text";
+  input.className = "text-answer-input";
+  input.placeholder = q.placeholder || "Type your answer...";
+  input.autocomplete = "off";
+  input.spellcheck = false;
+
+  const submit = document.createElement("button");
+  submit.className = "option text-submit";
+  submit.textContent = q.submitLabel || "Submit";
+
+  function normalize(text) {
+    return String(text)
+      .trim()
+      .toLowerCase()
+      .replace(/\s+/g, " ");
+  }
+
+  function checkAnswer() {
+    if (state.locked) return;
+
+    const typed = normalize(input.value);
+
+    const acceptedAnswers = Array.isArray(q.answers)
+      ? q.answers.map(normalize)
+      : [normalize(q.answer)];
+
+    const correct = acceptedAnswers.includes(typed);
+
+    handleAnswer(q, correct, submit, wrap);
+
+    if (!correct) {
+      input.focus();
+      input.select();
+    }
+  }
+
+  submit.addEventListener("click", checkAnswer);
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      checkAnswer();
+    }
+  });
+
+  wrap.appendChild(input);
+  wrap.appendChild(submit);
+  area.appendChild(wrap);
+
+  setTimeout(() => input.focus(), 100);
+}
 
   function buildChoiceArea(q, area) {
     const wrap = document.createElement("div");
@@ -211,7 +274,7 @@
 
     fin.innerHTML = `
       <div class="screen-inner center">
-        <p class="eyebrow">Verification complete.</p>
+        <p class="eyebrow">Congratulation</p>
         <h1 class="pin-title">${esc(cfg.finalTitle)}</h1>
         <div class="big-pin">${esc(pinSpaced)}</div>
         <p class="final-sub">${esc(cfg.finalSub)}</p>
@@ -235,7 +298,7 @@
         <p class="final-line">${esc(m.line)}</p>
         <div class="polaroid empty" aria-hidden="true">
           <span class="tape"></span>
-          <div class="empty-frame"><span>insert photo here</span></div>
+          <div class="empty-frame"><span>You can paste our next polaroid in the blank space in the letter</span></div>
         </div>
         <p class="instax-line">${esc(m.instax)}</p>
         <p class="pending-line">${esc(m.pending)}</p>
@@ -298,73 +361,143 @@
   }
 
   /* ───────────────────────── music (manual play only) ───────────────────────── */
-    function setupMusic() {
-    const btn = $("#music-btn");
-    const panel = $("#music-panel");
-    const m = cfg.music;
-    if (!m || !m.enabled || !m.url) { btn.style.display = "none"; return; }
-    let audio = null;
-    let started = false;
+  function setupMusic() {
+  const btn = $("#music-btn");
+  const panel = $("#music-panel");
+  const m = cfg.music;
 
-    function playMp3() {
-      if (!audio) {
-        audio = new Audio(m.url);
-        audio.loop = m.loop !== false;
+  if (!m || !m.enabled || !m.url) {
+    if (btn) btn.style.display = "none";
+    return;
+  }
+
+  let audio = null;
+
+  function getAudio() {
+    if (!audio) {
+      audio = new Audio(m.url);
+      audio.loop = m.loop !== false;
+      audio.preload = "auto";
+      audio.volume = m.volume ?? 0.4;
+
+      audio.addEventListener("error", () => {
+        console.error("AUDIO FILE ERROR:", audio.error);
+        console.error("Resolved URL:", audio.src);
+      });
+    }
+
+    return audio;
+  }
+
+  async function playMp3() {
+    const player = getAudio();
+
+    try {
+      await player.play();
+
+      console.log("MUSIC PLAYING:", player.src);
+
+      if (btn) {
+        btn.classList.add("playing");
       }
-      audio.play().catch(() => {});
-      btn.classList.add("playing");
-    }
 
-    if (m.type !== "spotify" && m.autoplay) {
-      const start = () => {
-        if (started) return;
-        started = true;
-        playMp3();
-      };
-      document.addEventListener("pointerdown", start, { once: true });
-      document.addEventListener("click", start, { once: true });
-    }
+      return true;
+    } catch (err) {
+      console.warn("MUSIC PLAYBACK FAILED:", err);
+      console.warn("Resolved URL:", player.src);
 
-    btn.addEventListener("click", () => {
-      started = true;
-      if (m.type === "spotify") {
-        const open = panel.classList.toggle("open");
-        if (open && !panel.dataset.loaded) {
-          const match = m.url.match(/track[\/:]([A-Za-z0-9]+)/);
-          if (match) {
-            panel.innerHTML =
-              `<iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/${match[1]}?utm_source=generator&theme=0" width="260" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
-            panel.dataset.loaded = "1";
-          }
+      return false;
+    }
+  }
+
+  function pauseMp3() {
+    if (!audio) return;
+
+    audio.pause();
+
+    if (btn) {
+      btn.classList.remove("playing");
+    }
+  }
+
+  // Make this available to the Begin button.
+  window.startBirthdayMusic = function () {
+    if (m.type !== "spotify") {
+      playMp3();
+    }
+  };
+
+  // MP3 play / pause button
+  if (m.type !== "spotify") {
+    if (btn) {
+      btn.addEventListener("click", async (e) => {
+        e.stopPropagation();
+
+        if (!audio || audio.paused) {
+          await playMp3();
+        } else {
+          pauseMp3();
         }
-      } else {
-        if (!audio || audio.paused) playMp3();
-        else { audio.pause(); btn.classList.remove("playing"); }
+      });
+    }
+
+    return;
+  }
+
+  // Spotify
+  if (btn) {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const open = panel.classList.toggle("open");
+
+      if (open && !panel.dataset.loaded) {
+        const match = m.url.match(/track[/:]([A-Za-z0-9]+)/);
+
+        if (match) {
+          panel.innerHTML = `
+            <iframe
+              style="border-radius:12px"
+              src="https://open.spotify.com/embed/track/${match[1]}?utm_source=generator&theme=0"
+              width="260"
+              height="80"
+              frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy">
+            </iframe>
+          `;
+
+          panel.dataset.loaded = "1";
+        }
       }
     });
   }
+}
 
 
   /* ───────────────────────── init ───────────────────────── */
   function init() {
-    document.title = `Happy ${cfg.ageLabel}, ${cfg.name} \u2661`;
+    document.title = `${cfg.name}'s Birthday`;
 
     // landing page texts (kept out of the HTML so it's all editable in config.js)
-    $("#landing-title").textContent = `${cfg.name}'s ${cfg.ageLabel} Birthday \u2661`;
-    $("#landing-locked").textContent = "Your present is currently locked.";
+    $("#landing-title").textContent = `${cfg.name}'s ${cfg.ageLabel} Birthday`;
+    $("#landing-locked").textContent = "TOO BAD your present is currently LOCKED.";
     $("#landing-note1").textContent =
       "Unfortunately, I can't just give you the PIN THAT easily.";
     $("#landing-note2").textContent =
-      "Complete the best-friend verification process to EARN your BIRTHDAY PRESENT.";
+      "Complete the verification process to EARN your BIRTHDAY PRESENT.";
 
     // intro texts
-    $("#intro-title").textContent = "Before we begin...";
+    $("#intro-title").textContent = "Before we begin,";
     $("#intro-para1").textContent =
-      `There are ${cfg.questions.length} very important questions standing between you and your present.`;
-    $("#intro-para2").textContent = "Get through them and your PIN will be revealed.";
-    $("#intro-para3").textContent = "Good luck. You should know these.";
+      `Answer these ${cfg.questions.length} questions to show me you EARN it.`;
+    $("#intro-para2").textContent = "Hint: The answer is literally everywhere. Start digging through something❤️";
+    $("#intro-para3").textContent = "Don't disappoint me";
 
-    $("#btn-begin").addEventListener("click", () => goTo("screen-intro"));
+    $("#btn-begin").addEventListener("click", () => {
+  window.startBirthdayMusic?.();
+  goTo("screen-intro");
+});
     $("#btn-ready").addEventListener("click", () => renderQuestion(0));
 
     setupMusic();

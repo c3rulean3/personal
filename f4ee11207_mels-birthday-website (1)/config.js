@@ -24,7 +24,7 @@ const birthdayConfig = {
   ageLabel: "22nd",       // ← how the age is written on the card ("22nd", "23rd"...)
 
   /* ★★★ THE PIN FOR THE PHYSICAL BOX — CHANGE IT HERE ★★★ */
-  finalPin: "220",        // ← the 3-digit code she'll use on the real lock
+  finalPin: "016",        // ← the 3-digit code she'll use on the real lock
 
 
   /* ────────────────────────────────────────────────
@@ -36,9 +36,10 @@ const birthdayConfig = {
   music: {
   enabled: true,
   type: "mp3",
-  url: "acute-amber-mzxtdwy5.edgeone.dev",
+  url: "https://archive.org/download/somi-birthday-mp3/SOMI%20%28%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%89%E1%85%A9%E1%84%86%E1%85%B5%29%20-%20BIRTHDAY%20%5BHANROMENG%20Color%20Coded%20Lyrics%5D.mp3",
   autoplay: true,
   loop: true,
+  volume: 0.4
 },
 
 
@@ -49,12 +50,11 @@ const birthdayConfig = {
      (A question can also override this with its own "customWrong".)
      ──────────────────────────────────────────────── */
   wrongMessages: [
-    "Girl...",
-    "Be serious.",
-    "After 14 years???",
-    "Try that again.",
-    "Absolutely not.",
-    "This is embarrassing for both of us.",
+    "👎🏻👎🏻👎🏻👎🏻👎🏻",
+    "❌❌❌❌",
+    "NO.",
+    "wtf",
+    "cmon mel",
   ],
 
 
@@ -83,34 +83,31 @@ const birthdayConfig = {
     /* ── QUESTION 1 — WHERE IT STARTED ─────────────── */
     {
       type: "choice",
-      title: "Let's start from the beginning.",
-      question: "Where did we first become friends?",
+      title: "Level: Moderate",
+      question: "What do I save your contact name as?",
       options: [
-        "Primary School",            // ← EDIT: put the real answer here (this is the correct one)
-        "Tuition",
-        "Through mutual friends",
-        "Online",
+        "mel",            // ← EDIT: put the real answer here (this is the correct one)
+        "Mel",
+        "Melody",
+        "Mel👛",
       ],
       correct: 0,                  // ← 0 = the first option is correct
-      correctMessage: "Okay good. Memory still functioning ✓",
-      customWrong: "Girl... 14 years and this is your answer?",
-      progressNote: "Best Friend Verification: 20% complete",
+      correctMessage: "Not bad not bad",
+      customWrong: "BOooooo",
+      progressNote: "We're just starting",
     },
 
     /* ── QUESTION 2 — INSIDE JOKE ──────────────────── */
     {
-      type: "choice",
-      title: "You should definitely know this.",
-      question: "If I suddenly became rich tomorrow, what is the first irresponsible thing we'd probably do?",
-      options: [
-        "Save it responsibly",
-        "Book a random trip",
-        "Clear our entire Taobao/Shopee carts",
-        "Buy property",
-      ],
-      correct: 2,                  // ← 2 = "Clear our entire Taobao/Shopee carts"
-      correctMessage: "300+ items are finally coming home.",
-      progressNote: "Best Friend Verification: 40% complete",
+      type: "text",
+      title: "Level: Easy",
+      question: "What is the name of the movie we recently watch together?",
+      placeholder: "type the name of movie",
+    submitLabel: "Submit",
+
+    answer: "Colony",
+      correctMessage: "this is a giveaway question anyway",
+      progressNote: "NEXTTTTT",
     },
 
     /* ── QUESTION 3 — MEMORY TEST (PHOTOS) ───────────
@@ -120,54 +117,55 @@ const birthdayConfig = {
          • a base64 data URI if you want zero external links.
        Put the OLDEST photo's number in "correct" below.
        They're shown in random order every time, so no cheating. */
-    {
-      type: "photo",
-      title: "Memory check.",
-      question: "Which one of these happened first?",
-      photos: [
-        { src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='400' height='400' fill='rgb(246,214,222)'/><path d='M200 262 C130 215 118 148 156 128 C180 116 196 130 200 142 C204 130 220 116 244 128 C282 148 270 215 200 262 Z' fill='rgb(255,255,255)' opacity='0.85'/><text x='200' y='330' font-family='Georgia,serif' font-size='22' fill='rgb(163,106,127)' text-anchor='middle'>your photo here 1</text></svg>" },
-        { src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='400' height='400' fill='rgb(242,222,232)'/><path d='M200 262 C130 215 118 148 156 128 C180 116 196 130 200 142 C204 130 220 116 244 128 C282 148 270 215 200 262 Z' fill='rgb(255,255,255)' opacity='0.85'/><text x='200' y='330' font-family='Georgia,serif' font-size='22' fill='rgb(163,106,127)' text-anchor='middle'>your photo here 2</text></svg>" },
-        { src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='400' height='400' fill='rgb(236,224,240)'/><path d='M200 262 C130 215 118 148 156 128 C180 116 196 130 200 142 C204 130 220 116 244 128 C282 148 270 215 200 262 Z' fill='rgb(255,255,255)' opacity='0.85'/><text x='200' y='330' font-family='Georgia,serif' font-size='22' fill='rgb(163,106,127)' text-anchor='middle'>your photo here 3</text></svg>" },
-        { src: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400'><rect width='400' height='400' fill='rgb(248,232,214)'/><path d='M200 262 C130 215 118 148 156 128 C180 116 196 130 200 142 C204 130 220 116 244 128 C282 148 270 215 200 262 Z' fill='rgb(255,255,255)' opacity='0.85'/><text x='200' y='330' font-family='Georgia,serif' font-size='22' fill='rgb(163,106,127)' text-anchor='middle'>your photo here 4</text></svg>" },
-      ],
-      correct: 0,                  // ← which photo happened FIRST (0 = the first in the list)
-      correctMessage: "Timeline restored ✓",
-      caption: "Can't believe we looked like this.",   // ← your personal memory caption
-      progressNote: "Best Friend Verification: 60% complete",
-    },
+      {
+    type: "text",
+    title: "Level: EXTREMELY HARD",
+    question: "Spell out my FULL NAME.",
+    placeholder: "type my government name",
+    submitLabel: "Submit",
 
+    answer: "Duong Pham Khanh Linh",
+
+    customWrong: "u suck",
+    correctMessage: "i know you probably checked your contact for it",
+
+    extraLines: [
+      "Moving on.."
+    ]
+  },
     /* ── QUESTION 4 — BEST FRIEND AUTHENTICATION ───── */
     {
-      type: "choice",
-      title: "Identity verification.",
-      question: "How confident are you that I'd choose you too?",
-      options: [ "25%", "50%", "75%", "100%" ],
-      correct: 3,                  // ← 3 = "100%" (correct answer only)
-      correctMessage: "Correct answer only.",
-      stamp: true,                 // ← shows the cute VERIFIED seal
-      progressNote: "Best Friend Status: VERIFIED ✓",
+      type: "text",
+      title: "Level: SUPPOSEDLY easy",
+      question: "What's my postal code",
+      placeholder: "######",
+      submitLabel: "Submit",
+
+      answer: "537475",        // ← 3 = "100%" (correct answer only)
+      correctMessage: "Now you know where to crash",
+                  // ← shows the cute VERIFIED seal
+      progressNote: "LAST QUESTION",
     },
 
     /* ── QUESTION 5 — FINAL QUESTION ───────────────── */
     {
-      type: "choice",
-      title: "One last one.",
-      question: "How long do you think you're stuck with me?",
-      options: [
-        "Until we're 30",
-        "Until we're 50",
-        "Until one of us gets married",
-        "Unfortunately, forever",
-      ],
-      correct: 3,                  // ← 3 = "Unfortunately, forever"
-      correctMessage: "Correct.",
-      pause: 900,                  // ← the little dramatic pause before "Correct."
-      extraLines: [
-        "14–15 years down.",
-        "And many more birthdays to go.",
-      ],
+      type: "text",
+    title: "Level: Hard",
+    question: "What is the song that's playing?",
+    placeholder: "paste Spotify link here",
+    submitLabel: "Submit",
+
+    answer: "https://open.spotify.com/track/5XcM0eD1lsWZibqJ9AUTFq?si=L4-sEzc5SOW9FTX8nNCqSw&utm_source=copy-link",
+
+    customWrong: "DO BETTER",
+    correctMessage: "Not bad..",
+    stamp: true, 
+
+    extraLines: [
+      "CONGRATS"
+    ],
       hearts: true,                // ← gentle floating hearts
-      progressNote: "Best Friend Verification: 100% complete",
+      progressNote: "You are VERIFIED ✓",
     },
   ],
 
@@ -177,11 +175,11 @@ const birthdayConfig = {
      These appear one at a time with cute loading dots.
      ──────────────────────────────────────────────── */
   verifyMessages: [
-    "Checking answers...",
-    "Confirming best friend status...",
-    "Searching friendship records...",
-    "14+ years found.",
-    "Access approved ✓",
+    "Wait a sec...",
+    "Be patience...",
+    "Wait la",
+    "Not ragebaiting",
+    "Ok done ✓",
   ],
   retrieveMessage: "Retrieving your birthday access code...",
 
@@ -189,13 +187,13 @@ const birthdayConfig = {
   /* ────────────────────────────────────────────────
      FINAL PAGE TEXTS
      ──────────────────────────────────────────────── */
-  finalTitle: "PIN UNLOCKED ♡",
+  finalTitle: "Here is your PIN",
   finalSub: "You may now open your present.",
-  openedButton: "I opened it!",
+  openedButton: "Click here after you open",
   finalMessages: {
     title: "Happy 22nd birthday, Mel.",                              // ← the very last message
-    line: "I hope this captures all the memories we're about to make next.",
+    line: "I hope this captures all the memories you're about to make next.",
     instax: "Now go put that Instax to use.",
-    pending: "First photo pending...",
+    pending: "byeeeee",
   },
 };
