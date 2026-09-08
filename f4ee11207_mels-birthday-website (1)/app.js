@@ -298,14 +298,35 @@
   }
 
   /* ───────────────────────── music (manual play only) ───────────────────────── */
-  function setupMusic() {
+    function setupMusic() {
     const btn = $("#music-btn");
     const panel = $("#music-panel");
     const m = cfg.music;
     if (!m || !m.enabled || !m.url) { btn.style.display = "none"; return; }
     let audio = null;
+    let started = false;
+
+    function playMp3() {
+      if (!audio) {
+        audio = new Audio(m.url);
+        audio.loop = m.loop !== false;
+      }
+      audio.play().catch(() => {});
+      btn.classList.add("playing");
+    }
+
+    if (m.type !== "spotify" && m.autoplay) {
+      const start = () => {
+        if (started) return;
+        started = true;
+        playMp3();
+      };
+      document.addEventListener("pointerdown", start, { once: true });
+      document.addEventListener("click", start, { once: true });
+    }
 
     btn.addEventListener("click", () => {
+      started = true;
       if (m.type === "spotify") {
         const open = panel.classList.toggle("open");
         if (open && !panel.dataset.loaded) {
@@ -317,24 +338,24 @@
           }
         }
       } else {
-        if (!audio) audio = new Audio(m.url);
-        if (audio.paused) { audio.play().catch(() => {}); btn.classList.add("playing"); }
+        if (!audio || audio.paused) playMp3();
         else { audio.pause(); btn.classList.remove("playing"); }
       }
     });
   }
+
 
   /* ───────────────────────── init ───────────────────────── */
   function init() {
     document.title = `Happy ${cfg.ageLabel}, ${cfg.name} \u2661`;
 
     // landing page texts (kept out of the HTML so it's all editable in config.js)
-    $("#landing-title").textContent = `Happy ${cfg.ageLabel}, ${cfg.name} \u2661`;
+    $("#landing-title").textContent = `${cfg.name}'s ${cfg.ageLabel} Birthday \u2661`;
     $("#landing-locked").textContent = "Your present is currently locked.";
     $("#landing-note1").textContent =
-      "Unfortunately, your best friend couldn't just give you the PIN normally.";
+      "Unfortunately, I can't just give you the PIN THAT easily.";
     $("#landing-note2").textContent =
-      "Complete a very serious best-friend verification process to retrieve your 3-digit access code.";
+      "Complete the best-friend verification process to EARN your BIRTHDAY PRESENT.";
 
     // intro texts
     $("#intro-title").textContent = "Before we begin...";

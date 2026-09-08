@@ -34,10 +34,13 @@ const birthdayConfig = {
      • set enabled to false to hide the music button entirely
      ──────────────────────────────────────────────── */
   music: {
-    enabled: false,       // ← set to true once you add a link
-    type: "spotify",      // ← "spotify" or "mp3"
-    url: ""               // ← e.g. "https://open.spotify.com/track/..." or "https://.../song.mp3"
-  },
+  enabled: true,
+  type: "mp3",
+  url: "acute-amber-mzxtdwy5.edgeone.dev",
+  autoplay: true,
+  loop: true,
+},
+
 
 
   /* ────────────────────────────────────────────────
