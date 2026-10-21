@@ -282,11 +282,9 @@
           <div class="gift-lid"><div class="bow"><span class="loop left"></span><span class="loop right"></span><span class="knot"></span></div></div>
           <div class="gift-body"></div>
         </div>
-        <button class="btn-primary" id="btn-opened">${esc(cfg.openedButton)}</button>
       </div>`;
 
-    $("#btn-opened").addEventListener("click", showLastMessage);
-    goTo("screen-final");
+    
   }
 
   function showLastMessage() {
