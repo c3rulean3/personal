@@ -183,14 +183,17 @@ const birthdayConfig = {
     {
       type: "text",
     title: "Level: Hard",
-    question: "What is the song that's playing?",
-    placeholder: "paste Spotify link here",
-    submitLabel: "Submit",
-
-    answer: "https://open.spotify.com/track/5XcM0eD1lsWZibqJ9AUTFq?si=L4-sEzc5SOW9FTX8nNCqSw&utm_source=copy-link",
+    question: "Who sang the song that's playing?",
+    options: [
+        "Chungha",            // ← EDIT: put the real answer here (this is the correct one)
+        "Sunmi",
+        "Justin Bieber",
+        "Somi",
+      ],
+      correct: 2,  
 
     customWrong: "DO BETTER",
-    correctMessage: "Not bad..",
+    correctMessage: "TOO EASY INNIT",
     stamp: true, 
 
     extraLines: [
