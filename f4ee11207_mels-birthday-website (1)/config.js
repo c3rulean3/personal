@@ -190,7 +190,7 @@ const birthdayConfig = {
         "Justin Bieber",
         "Somi",
       ],
-      correct: 2,   
+      correct: 3,   
 
     customWrong: "DO BETTER",
     correctMessage: "TOO EASY INNIT",
