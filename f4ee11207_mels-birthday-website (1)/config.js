@@ -181,16 +181,16 @@ const birthdayConfig = {
 
     /* ── QUESTION 5 — FINAL QUESTION ───────────────── */
     {
-      type: "choice",
-    title: "Level: Hard",
-    question: "Who sang the song that's playing?",
-    options: [
-        "Chungha",            // ← EDIT: put the real answer here (this is the correct one)
-        "Sunmi",
+    type: "choice",
+      title: "Level: VERY EASY",
+      question: "Who sang the song playing in the background?",
+      options: [
+        "Sunmi",            // ← EDIT: put the real answer here (this is the correct one)
+        "ChungHa",
         "Justin Bieber",
         "Somi",
       ],
-      correct: 2,  
+      correct: 2,   
 
     customWrong: "DO BETTER",
     correctMessage: "TOO EASY INNIT",
