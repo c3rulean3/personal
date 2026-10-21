@@ -221,7 +221,6 @@ const birthdayConfig = {
      ──────────────────────────────────────────────── */
   finalTitle: "Here is your PIN",
   finalSub: "You may now open the next box.",
-  openedButton: "Click here after you open your final present",
   finalMessages: {
     title: "Happy 22nd birthday, Mel.",                              // ← the very last message
     line: "I hope this captures all the memories you're about to make next.",
