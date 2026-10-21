@@ -24,7 +24,7 @@ const birthdayConfig = {
   ageLabel: "22nd",       // ← how the age is written on the card ("22nd", "23rd"...)
 
   /* ★★★ THE PIN FOR THE PHYSICAL BOX — CHANGE IT HERE ★★★ */
-  finalPin: "016",        // ← the 3-digit code she'll use on the real lock
+  finalPin: "1616",        // ← the 3-digit code she'll use on the real lock
 
 
   /* ────────────────────────────────────────────────
