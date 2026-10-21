@@ -485,7 +485,7 @@
     $("#landing-note1").textContent =
       "Unfortunately, I can't just give you the PIN THAT easily.";
     $("#landing-note2").textContent =
-      "Complete the verification process to EARN your BIRTHDAY PRESENT.";
+      "Complete this series of questions to EARN your BIRTHDAY PRESENT.";
 
     // intro texts
     $("#intro-title").textContent = "Before we begin,";
