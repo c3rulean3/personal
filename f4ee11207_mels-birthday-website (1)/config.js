@@ -133,6 +133,22 @@ const birthdayConfig = {
       "Moving on.."
     ]
   },
+     {
+     type: "text",
+    title: "Level: Easy peasy",
+    question: "What is the capital of India",
+    placeholder: "Answer: Not Mumbai",
+    submitLabel: "Submit",
+
+    answer: "New Delhi",
+
+    customWrong: "stuuuuupid",
+    correctMessage: "Google is free anyway",
+
+    extraLines: [
+      "Moving on.."
+    ]
+  },
     /* ── QUESTION 4 — BEST FRIEND AUTHENTICATION ───── */
     {
       type: "text",
@@ -146,6 +162,22 @@ const birthdayConfig = {
                   // ← shows the cute VERIFIED seal
       progressNote: "LAST QUESTION",
     },
+     {
+     type: "text",
+    title: "Level: Decent",
+    question: "What is (24*7)+(36/3)-(18*4)+(45*2)-(64/8)+(13*6)-(27*3)+(56/7)+(19*5)-(48/4)+(11*9)-(35*2)?",
+    placeholder: "Hahahahahaha",
+    submitLabel: "Submit",
+
+    answer: "307",
+
+    customWrong: "Try again",
+    correctMessage: "The best accountant.",
+
+    extraLines: [
+      "Moving on.."
+    ]
+  },
 
     /* ── QUESTION 5 — FINAL QUESTION ───────────────── */
     {
@@ -188,8 +220,8 @@ const birthdayConfig = {
      FINAL PAGE TEXTS
      ──────────────────────────────────────────────── */
   finalTitle: "Here is your PIN",
-  finalSub: "You may now open your present.",
-  openedButton: "Click here after you open",
+  finalSub: "You may now open the next box.",
+  openedButton: "Click here after you open your final present",
   finalMessages: {
     title: "Happy 22nd birthday, Mel.",                              // ← the very last message
     line: "I hope this captures all the memories you're about to make next.",
