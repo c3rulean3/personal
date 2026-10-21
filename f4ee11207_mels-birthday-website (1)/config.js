@@ -181,7 +181,7 @@ const birthdayConfig = {
 
     /* ── QUESTION 5 — FINAL QUESTION ───────────────── */
     {
-      type: "text",
+      type: "choice",
     title: "Level: Hard",
     question: "Who sang the song that's playing?",
     options: [
